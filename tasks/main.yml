@@ -1,0 +1,59 @@
+---
+
+- name: Create Code Directory
+  file:
+    path: ~/code-server
+    state: directory
+
+- name: Get the Code Version
+  get_url:
+    url: https://github.com/cdr/code-server/releases/download/{{ code_server_version }}/code-server-{{ code_server_version }}-linux-x86_64.tar.gz
+    dest: ~/code-server
+
+- name: Unarchive the file
+  unarchive:
+    src: ~/code-server/code-server-{{ code_server_version }}-linux-x86_64.tar.gz
+    dest: ~/code-server
+
+- name: Copy file with owner and permissions
+  copy:
+    src: ~/code-server/code-server-{{ code_server_version }}-linux-x86_64.tar.gz
+    dest: /usr/lib/code-server
+
+- name: Create symbolic link 
+  file:
+    src: /usr/lib/code-server/code-server
+    dest: /usr/bin/code-server
+    state: link
+
+- name: Create Code Directory
+  file:
+    path: /var/lib/code-server
+    state: directory
+
+- name: Sets Code Service Config file
+  template:
+    src: "code-server.service"
+    dest: /lib/systemd/system/code-server.service
+
+- name: Start service code-server, if not started
+  service:
+    name: code-server
+    state: started
+
+- name: Sets Nginx conf file
+  template:
+    src: "nginx.conf"
+    dest: /etc/nginx/sites-available/code-server.conf
+
+- name: Create symbolic link 
+  file:
+    src: /etc/nginx/sites-available/code-server.conf
+    dest: /etc/nginx/sites-enabled/code-server.conf
+    state: link
+
+- name: Restart service Nginx, if not started
+  service:
+    name: nginx
+    state: restarted
+
