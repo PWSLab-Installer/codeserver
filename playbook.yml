@@ -4,6 +4,8 @@
   connection: local
   vars:
     code_server_version: 3.4.1
+    certbot_create_if_missing: true
+    certbot_admin_email: "{{ your_email_id }}"
     certbot_certs: 
       - domains:
           - "{{ your_domain_name }}"
@@ -28,8 +30,14 @@
           echo: yes
       register: your_domain_name_result
 
+    - pause:
+          prompt: "Please Type Your Email ID"
+          echo: yes
+      register: your_email_id_result
+
     - set_fact:
             your_domain_name: "{{ your_domain_name_result.user_input }}"
+            your_email_id: "{{ your_email_id_result.user_input }}"
 
     
     - name: Check if Nginx is already installed
@@ -58,7 +66,7 @@
     - name: Installing Certbot
       include_role:
         name: pwslab.certbot
-      when: not nginx_exists.stat.exists
+      # when: not nginx_exists.stat.exists
 
 
     

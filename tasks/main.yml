@@ -49,7 +49,7 @@
 - name: Sets Nginx conf file
   template:
     src: "nginx.conf"
-    dest: /etc/nginx/sites-available/code-server.conf
+    dest: /etc/nginx/sites-available/{{ your_domain_name }}
 
 - name: Create symbolic link 
   file:
