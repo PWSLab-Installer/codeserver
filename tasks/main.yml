@@ -54,7 +54,7 @@
 - name: Create symbolic link 
   file:
     src: /etc/nginx/sites-available/{{ your_domain_name }}
-    dest: /etc/nginx/sites-enabled/
+    dest: /etc/nginx/sites-enabled/{{ your_domain_name }}
     state: link
 
 - name: Restart service Nginx, if not started
