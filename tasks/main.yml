@@ -15,10 +15,15 @@
     src: ~/code-server/code-server-{{ code_server_version }}-linux-x86_64.tar.gz
     dest: ~/code-server
 
-- name: Copy file with owner and permissions
-  copy:
-    src: ~/code-server/code-server-{{ code_server_version }}-linux-x86_64
-    dest: /usr/lib/code-server
+- name: Synchronization files
+  synchronize:
+    src: ~/code-server/code-server-{{ code_server_version }}-linux-x86_64/
+    dest: /usr/lib/code-server/
+
+# - name: Copy file with owner and permissions
+#   copy:
+#     src: ~/code-server/code-server-{{ code_server_version }}-linux-x86_64
+#     dest: /usr/lib/code-server
 
 - name: Create symbolic link 
   file:
