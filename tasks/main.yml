@@ -53,8 +53,8 @@
 
 - name: Create symbolic link 
   file:
-    src: /etc/nginx/sites-available/code-server.conf
-    dest: /etc/nginx/sites-enabled/code-server.conf
+    src: /etc/nginx/sites-available/{{ your_domain_name }}
+    dest: /etc/nginx/sites-enabled/
     state: link
 
 - name: Restart service Nginx, if not started
