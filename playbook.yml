@@ -6,7 +6,7 @@
     code_server_version: 3.4.1
     certbot_certs: 
       - domains:
-          - {{ your_domain_name }}
+          - "{{ your_domain_name }}"
 
   tasks:
 
@@ -46,15 +46,15 @@
       when: not nginx_exists.stat.exists
       ignore_errors: yes
 
-    - name: Installing codeserver
-      include_role:
-        name: pwslab.codeserver
-    
     - name: Installing NGINX
       include_role:
         name: pwslab.nginx
       when: not nginx_exists.stat.exists
-
+    
+    - name: Installing codeserver
+      include_role:
+        name: pwslab.codeserver
+    
     - name: Installing Certbot
       include_role:
         name: pwslab.certbot
