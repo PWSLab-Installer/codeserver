@@ -79,8 +79,5 @@
   when:
         - ubuntu_os.stdout | regex_search("Ubuntu")
 
-- name: Restart service Nginx, if not started
-  service:
-    name: nginx
-    state: restarted
+
 
